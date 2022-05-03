@@ -1,5 +1,5 @@
 <template>
-  <div class="row my-4 justify-content-between">
+  <div class="row my-4 justify-content-between g-3">
     <div class="col form-group d-flex align-items-center gap-2">
       <select
         id="per-page"
@@ -42,12 +42,22 @@
             {{ note.description }}
           </p>
         </div>
-        <div class="card-footer border-0">
+        <div class="card-footer border-0 text-center">
+          <a
+            class="btn btn-sm btn-info shadow-sm btn-circle"
+            data-bs-toggle="offcanvas"
+            href="#editCanvas"
+            role="button"
+            aria-controls="editCanvas"
+            @click="setNote(note)"
+          >
+            <i class="fas fa-pen fa-sm"></i>
+          </a>
           <button
-            class="btn btn-sm btn-danger shadow-sm rounded-pill"
+            class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
             @click="deleteNote(note.title, note.id)"
           >
-            X
+            <i class="fas fa-trash fa-sm"></i>
           </button>
         </div>
       </div>
@@ -70,6 +80,7 @@
       </li>
     </ul>
   </div>
+  <NoteEdit :note="note" :canvas="canvas" @refresh="getNotes" />
   <LoadingSpinner />
 </template>
 
@@ -78,10 +89,11 @@ import axios from "axios";
 import base_url from "../../helpers";
 import toast from "../../helpers/toast";
 import LoadingSpinner from "../others/LoadingSpinner.vue";
+import NoteEdit from "./NoteEdit.vue";
 
 export default {
   name: "NotesList",
-  components: { LoadingSpinner },
+  components: { LoadingSpinner, NoteEdit },
   data() {
     return {
       notes: [],
@@ -91,6 +103,8 @@ export default {
         perPage: 10,
         orderBy: "created_at",
       },
+      note: {},
+      canvas: false,
     };
   },
   watch: {
@@ -114,6 +128,7 @@ export default {
         })
         .then((res) => {
           this.$store.state.loading = false;
+          this.canvas = false;
           this.notes = res.data.data;
           this.params.last_page = res.data.meta.last_page;
         })
@@ -142,6 +157,10 @@ export default {
         this.params.page++;
       }
     },
+    setNote(note) {
+      this.note = note;
+      this.canvas = true;
+    },
   },
   mounted() {
     this.getNotes();
@@ -156,5 +175,11 @@ export default {
 
 .w-small {
   width: 80px;
+}
+
+.btn-circle {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
 }
 </style>
