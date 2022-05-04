@@ -1,4 +1,17 @@
 <template>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <i
+        class="fas fa-search text-secondary fa-sm position-absolute search-icon"
+      ></i>
+      <input
+        type="text"
+        class="form-control border-0 shadow-sm search-input"
+        v-model="search"
+        placeholder="Search notes..."
+      />
+    </div>
+  </div>
   <div class="row my-4 justify-content-between g-3">
     <div class="col form-group d-flex align-items-center gap-2">
       <select
@@ -29,6 +42,9 @@
     </div>
   </div>
   <div class="row justify-content-center g-4">
+    <div class="my-5" v-if="!notes.length">
+      <p class="mb-0 text-center">Nothing found!</p>
+    </div>
     <div class="col-6 col-lg-4 col-xl-3" v-for="note in notes" :key="note.id">
       <div class="card h-100 border-0 shadow-sm" :class="note.color">
         <div class="card-body">
@@ -117,10 +133,17 @@ export default {
         perPage: 10,
       },
       note: {},
+      search: "",
     };
   },
   watch: {
     params: {
+      handler() {
+        this.getNotes();
+      },
+      deep: true,
+    },
+    search: {
       handler() {
         this.getNotes();
       },
@@ -135,6 +158,7 @@ export default {
           params: {
             page: this.params.page,
             perPage: this.params.perPage,
+            search: this.search,
           },
         })
         .then((res) => {
@@ -224,5 +248,14 @@ export default {
   border-radius: 50%;
   width: 28px;
   height: 28px;
+}
+
+.search-icon {
+  margin-top: 11px;
+  margin-left: 10px;
+}
+
+.search-input {
+  padding-left: 30px;
 }
 </style>
