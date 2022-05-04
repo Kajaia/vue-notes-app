@@ -100,9 +100,10 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary shadow-sm px-4">
-            Save changes
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="submit" class="btn shadow-sm px-4" :class="color">
+            <i class="fas fa-save fa-sm me-1"></i>
+            Add note
           </button>
         </div>
       </form>

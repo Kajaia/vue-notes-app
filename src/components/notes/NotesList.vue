@@ -16,14 +16,14 @@
         <small>Per page</small>
       </label>
     </div>
-    <div class="col-md-3 form-group text-end">
+    <div class="col form-group text-end">
       <button
         type="button"
-        class="btn btn-sm btn-info shadow-sm rounded-pill px-4"
+        class="btn bg-success shadow-sm px-4"
         data-bs-toggle="modal"
         data-bs-target="#noteAddModal"
       >
-        <i class="fas fa-plus me-1"></i>
+        <i class="fas fa-plus fa-sm me-1"></i>
         Add note
       </button>
     </div>
