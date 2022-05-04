@@ -46,7 +46,9 @@
     >
       <div class="card h-100 border-0 shadow-sm" :class="note.color">
         <div class="card-body">
-          <h5 class="card-title">
+          <h5
+            class="card-title d-flex align-items-center justify-content-between"
+          >
             {{ capitalise(note.title) }}
           </h5>
           <p class="card-text">
@@ -182,10 +184,6 @@ export default {
 </script>
 
 <style scoped>
-.cursor-pointer {
-  cursor: pointer;
-}
-
 .w-small {
   width: 80px;
 }

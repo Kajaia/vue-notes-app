@@ -8,7 +8,7 @@
   >
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <form class="modal-content" @submit.prevent="addNote">
-        <div class="modal-header">
+        <div class="modal-header" :class="color">
           <h5 class="modal-title" id="noteAddModalLabel">Add note</h5>
           <button
             type="button"
@@ -39,6 +39,66 @@
               v-model="description"
             ></textarea>
           </div>
+          <div class="form-group mt-3">
+            <label class="form-label">Choose color</label>
+            <div class="d-flex align-items-center gap-3">
+              <div class="form-check">
+                <input
+                  type="radio"
+                  id="white"
+                  class="form-check-input bg-light p-4 cursor-pointer"
+                  v-model="color"
+                  value="bg-light"
+                  checked
+                />
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  id="blue"
+                  class="form-check-input bg-primary p-4 cursor-pointer"
+                  v-model="color"
+                  value="bg-primary"
+                />
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  id="green"
+                  class="form-check-input bg-success p-4 cursor-pointer"
+                  v-model="color"
+                  value="bg-success"
+                />
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  id="red"
+                  class="form-check-input bg-danger p-4 cursor-pointer"
+                  v-model="color"
+                  value="bg-danger"
+                />
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  id="yellow"
+                  class="form-check-input bg-warning p-4 cursor-pointer"
+                  v-model="color"
+                  value="bg-warning"
+                />
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  id="gray"
+                  class="form-check-input bg-secondary p-4 cursor-pointer"
+                  v-model="color"
+                  value="bg-secondary"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary shadow-sm px-4">
@@ -61,6 +121,7 @@ export default {
     return {
       title: "",
       description: "",
+      color: "bg-light",
     };
   },
   methods: {
@@ -70,7 +131,7 @@ export default {
         .post(`${base_url}/notes`, {
           title: this.title,
           description: this.description,
-          color: "bg-white",
+          color: this.color,
           pinned: 0,
           archived: 0,
         })
@@ -79,6 +140,7 @@ export default {
           if (res.status === 201) {
             this.$emit("refresh");
             this.closeModal();
+            this.clearInputs();
             toast("success", `"${this.title}" added successfully!`);
           }
         })
@@ -88,6 +150,11 @@ export default {
       let myModal = document.querySelector(".modal.show");
       let modal = bootstrap.Modal.getInstance(myModal);
       modal.hide();
+    },
+    clearInputs() {
+      this.title = "";
+      this.description = "";
+      this.color = "bg-light";
     },
   },
 };
