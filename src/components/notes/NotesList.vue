@@ -162,11 +162,13 @@ export default {
     prevPage() {
       if (this.params.page > 1) {
         this.params.page--;
+        this.scrollToTop();
       }
     },
     nextPage() {
       if (this.params.page < this.params.last_page) {
         this.params.page++;
+        this.scrollToTop();
       }
     },
     setNote(note) {
@@ -175,6 +177,12 @@ export default {
     },
     capitalise(str) {
       return str.slice(0, 1).toUpperCase() + str.slice(1);
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     },
   },
   mounted() {
