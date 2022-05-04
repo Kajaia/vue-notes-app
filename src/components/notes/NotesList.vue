@@ -16,17 +16,7 @@
         <small>Per page</small>
       </label>
     </div>
-    <div class="col-md-3 form-group">
-      <select
-        id="order"
-        class="form-select border-0 shadow-sm"
-        v-model="params.orderBy"
-      >
-        <option value="created_at">Date</option>
-        <option value="title">Name</option>
-      </select>
-    </div>
-    <div class="col-md-12">
+    <div class="col-md-3 form-group text-end">
       <button
         type="button"
         class="btn btn-sm btn-info shadow-sm rounded-pill px-4"
@@ -70,6 +60,18 @@
             @click="deleteNote(note.title, note.id)"
           >
             <i class="fas fa-trash"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
+            @click="pinNote(note.title, note.id)"
+          >
+            <i class="fas fa-thumbtack"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
+            @click="archiveNote(note.title, note.id)"
+          >
+            <i class="fas fa-archive"></i>
           </button>
         </div>
       </div>
@@ -115,7 +117,6 @@ export default {
         page: 1,
         last_page: null,
         perPage: 10,
-        orderBy: "created_at",
       },
       note: {},
     };
@@ -136,7 +137,6 @@ export default {
           params: {
             page: this.params.page,
             perPage: this.params.perPage,
-            orderBy: this.params.orderBy,
           },
         })
         .then((res) => {
@@ -155,6 +155,32 @@ export default {
             this.$store.state.loading = false;
             this.getNotes();
             toast("success", `"${title}" removed successfully!`);
+          }
+        })
+        .catch(console.error());
+    },
+    pinNote(title, id) {
+      this.$store.state.loading = true;
+      axios
+        .post(`${base_url}/pin/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            this.$store.state.loading = false;
+            this.getNotes();
+            toast("success", `"${title}" updated successfully!`);
+          }
+        })
+        .catch(console.error());
+    },
+    archiveNote(title, id) {
+      this.$store.state.loading = true;
+      axios
+        .post(`${base_url}/archive/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            this.$store.state.loading = false;
+            this.getNotes();
+            toast("success", `"${title}" archived successfully!`);
           }
         })
         .catch(console.error());
