@@ -41,7 +41,7 @@
           </div>
           <div class="form-group mt-3">
             <label class="form-label">Choose color</label>
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 flex-wrap">
               <div class="form-check">
                 <input
                   type="radio"
