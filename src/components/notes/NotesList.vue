@@ -29,11 +29,7 @@
     </div>
   </div>
   <div class="row justify-content-center g-4">
-    <div
-      class="col-12 col-md-6 col-lg-4 col-xl-3"
-      v-for="note in notes"
-      :key="note.id"
-    >
+    <div class="col-6 col-lg-4 col-xl-3" v-for="note in notes" :key="note.id">
       <div class="card h-100 border-0 shadow-sm" :class="note.color">
         <div class="card-body">
           <h5
@@ -45,7 +41,9 @@
             {{ note.description }}
           </p>
         </div>
-        <div class="card-footer border-0 text-center">
+        <div
+          class="card-footer border-0 d-flex align-items-center justify-content-center flex-wrap gap-1"
+        >
           <button
             type="button"
             class="btn btn-sm btn-dark shadow-sm btn-circle p-0"
@@ -56,19 +54,19 @@
             <i class="fas fa-pen fa-sm"></i>
           </button>
           <button
-            class="btn btn-sm btn-dark shadow-sm btn-circle p-0 ms-1"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0"
             @click="deleteNote(note.title, note.id)"
           >
             <i class="fas fa-trash fa-sm"></i>
           </button>
           <button
-            class="btn btn-sm btn-dark shadow-sm btn-circle p-0 ms-1"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0"
             @click="pinNote(note.title, note.id)"
           >
             <i class="fas fa-thumbtack fa-sm"></i>
           </button>
           <button
-            class="btn btn-sm btn-dark shadow-sm btn-circle p-0 ms-1"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0"
             @click="archiveNote(note.title, note.id)"
           >
             <i class="fas fa-archive fa-sm"></i>
