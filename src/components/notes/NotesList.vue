@@ -48,30 +48,30 @@
         <div class="card-footer border-0 text-center">
           <button
             type="button"
-            class="btn btn-sm btn-info shadow-sm btn-circle"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0"
             data-bs-toggle="modal"
             data-bs-target="#noteEditModal"
             @click="setNote(note)"
           >
-            <i class="fas fa-pen"></i>
+            <i class="fas fa-pen fa-sm"></i>
           </button>
           <button
-            class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0 ms-1"
             @click="deleteNote(note.title, note.id)"
           >
-            <i class="fas fa-trash"></i>
+            <i class="fas fa-trash fa-sm"></i>
           </button>
           <button
-            class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0 ms-1"
             @click="pinNote(note.title, note.id)"
           >
-            <i class="fas fa-thumbtack"></i>
+            <i class="fas fa-thumbtack fa-sm"></i>
           </button>
           <button
-            class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
+            class="btn btn-sm btn-dark shadow-sm btn-circle p-0 ms-1"
             @click="archiveNote(note.title, note.id)"
           >
-            <i class="fas fa-archive"></i>
+            <i class="fas fa-archive fa-sm"></i>
           </button>
         </div>
       </div>
@@ -224,7 +224,7 @@ export default {
 
 .btn-circle {
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
 </style>
