@@ -1,17 +1,15 @@
 <template>
   <div
     class="modal fade"
-    id="noteEditModal"
+    id="noteAddModal"
     tabindex="-1"
-    aria-labelledby="noteEditModalLabel"
+    aria-labelledby="noteAddModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-      <form class="modal-content" @submit.prevent="updateNote">
+      <form class="modal-content" @submit.prevent="addNote">
         <div class="modal-header">
-          <h5 class="modal-title" id="noteEditModalLabel">
-            Edit "{{ note.title }}"
-          </h5>
+          <h5 class="modal-title" id="noteAddModalLabel">Add note</h5>
           <button
             type="button"
             class="btn-close"
@@ -58,40 +56,30 @@ import base_url from "../../helpers";
 import toast from "../../helpers/toast";
 
 export default {
-  name: "NoteEdit",
-  props: ["note"],
+  name: "NoteAdd",
   data() {
     return {
       title: "",
       description: "",
     };
   },
-  watch: {
-    note: {
-      handler() {
-        this.title = this.note.title;
-        this.description = this.note.description;
-      },
-      deep: true,
-    },
-  },
   methods: {
-    updateNote() {
+    addNote() {
       this.$store.state.loading = true;
       axios
-        .put(`${base_url}/notes/${this.note.id}`, {
+        .post(`${base_url}/notes`, {
           title: this.title,
           description: this.description,
-          color: this.note.color,
-          pinned: this.note.pinned,
-          archived: this.note.archived,
+          color: "bg-white",
+          pinned: 0,
+          archived: 0,
         })
         .then((res) => {
           this.$store.state.loading = false;
-          if (res.status === 200) {
+          if (res.status === 201) {
             this.$emit("refresh");
             this.closeModal();
-            toast("success", `"${this.title}" updated successfully!`);
+            toast("success", `"${this.title}" added successfully!`);
           }
         })
         .catch(console.error());

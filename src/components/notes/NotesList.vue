@@ -26,6 +26,17 @@
         <option value="title">Name</option>
       </select>
     </div>
+    <div class="col-md-12">
+      <button
+        type="button"
+        class="btn btn-sm btn-info shadow-sm rounded-pill px-4"
+        data-bs-toggle="modal"
+        data-bs-target="#noteAddModal"
+      >
+        <i class="fas fa-plus me-1"></i>
+        Add note
+      </button>
+    </div>
   </div>
   <div class="row justify-content-center g-4">
     <div
@@ -36,28 +47,27 @@
       <div class="card h-100 border-0 shadow-sm" :class="note.color">
         <div class="card-body">
           <h5 class="card-title">
-            {{ note.title }}
+            {{ capitalise(note.title) }}
           </h5>
           <p class="card-text">
             {{ note.description }}
           </p>
         </div>
         <div class="card-footer border-0 text-center">
-          <a
+          <button
+            type="button"
             class="btn btn-sm btn-info shadow-sm btn-circle"
-            data-bs-toggle="offcanvas"
-            href="#editCanvas"
-            role="button"
-            aria-controls="editCanvas"
+            data-bs-toggle="modal"
+            data-bs-target="#noteEditModal"
             @click="setNote(note)"
           >
-            <i class="fas fa-pen fa-sm"></i>
-          </a>
+            <i class="fas fa-pen"></i>
+          </button>
           <button
             class="btn btn-sm btn-info shadow-sm btn-circle ms-1"
             @click="deleteNote(note.title, note.id)"
           >
-            <i class="fas fa-trash fa-sm"></i>
+            <i class="fas fa-trash"></i>
           </button>
         </div>
       </div>
@@ -80,7 +90,8 @@
       </li>
     </ul>
   </div>
-  <NoteEdit :note="note" :canvas="canvas" @refresh="getNotes" />
+  <NoteAdd @refresh="getNotes" />
+  <NoteEdit :note="note" @refresh="getNotes" />
   <LoadingSpinner />
 </template>
 
@@ -90,10 +101,11 @@ import base_url from "../../helpers";
 import toast from "../../helpers/toast";
 import LoadingSpinner from "../others/LoadingSpinner.vue";
 import NoteEdit from "./NoteEdit.vue";
+import NoteAdd from "./NoteAdd.vue";
 
 export default {
   name: "NotesList",
-  components: { LoadingSpinner, NoteEdit },
+  components: { LoadingSpinner, NoteEdit, NoteAdd },
   data() {
     return {
       notes: [],
@@ -104,7 +116,6 @@ export default {
         orderBy: "created_at",
       },
       note: {},
-      canvas: false,
     };
   },
   watch: {
@@ -128,7 +139,6 @@ export default {
         })
         .then((res) => {
           this.$store.state.loading = false;
-          this.canvas = false;
           this.notes = res.data.data;
           this.params.last_page = res.data.meta.last_page;
         })
@@ -160,6 +170,9 @@ export default {
     setNote(note) {
       this.note = note;
       this.canvas = true;
+    },
+    capitalise(str) {
+      return str.slice(0, 1).toUpperCase() + str.slice(1);
     },
   },
   mounted() {
