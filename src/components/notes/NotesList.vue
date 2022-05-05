@@ -46,7 +46,14 @@
       <p class="mb-0 text-center">Nothing found!</p>
     </div>
     <div class="col-6 col-lg-4 col-xl-3" v-for="note in notes" :key="note.id">
-      <div class="card h-100 border-0 shadow-sm" :class="note.color">
+      <div
+        class="card h-100 border-0 shadow-sm"
+        :class="
+          note.color === 'bg-dark'
+            ? `${note.color} text-white`
+            : `${note.color}`
+        "
+      >
         <div class="card-body">
           <h5
             class="card-title d-flex align-items-center justify-content-between"
