@@ -141,7 +141,6 @@ export default {
   },
   methods: {
     updateNote() {
-      this.$store.state.loading = true;
       axios
         .put(`${base_url}/notes/${this.note.id}`, {
           title: this.title,
@@ -151,7 +150,6 @@ export default {
           archived: this.note.archived,
         })
         .then((res) => {
-          this.$store.state.loading = false;
           if (res.status === 200) {
             this.$emit("refresh");
             this.closeModal();

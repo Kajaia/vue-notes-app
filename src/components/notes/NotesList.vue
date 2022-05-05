@@ -159,7 +159,6 @@ export default {
   },
   methods: {
     getNotes() {
-      this.$store.state.loading = true;
       axios
         .get(`${base_url}/notes`, {
           params: {
@@ -169,19 +168,16 @@ export default {
           },
         })
         .then((res) => {
-          this.$store.state.loading = false;
           this.notes = res.data.data;
           this.params.last_page = res.data.meta.last_page;
         })
         .catch(console.error());
     },
     deleteNote(title, id) {
-      this.$store.state.loading = true;
       axios
         .delete(`${base_url}/notes/${id}`)
         .then((res) => {
           if (res.status === 200) {
-            this.$store.state.loading = false;
             this.getNotes();
             toast("success", `"${title}" removed successfully!`);
           }
@@ -189,12 +185,10 @@ export default {
         .catch(console.error());
     },
     pinNote(title, id) {
-      this.$store.state.loading = true;
       axios
         .post(`${base_url}/pin/${id}`)
         .then((res) => {
           if (res.status === 200) {
-            this.$store.state.loading = false;
             this.getNotes();
             toast("success", `"${title}" updated successfully!`);
           }
@@ -202,12 +196,10 @@ export default {
         .catch(console.error());
     },
     archiveNote(title, id) {
-      this.$store.state.loading = true;
       axios
         .post(`${base_url}/archive/${id}`)
         .then((res) => {
           if (res.status === 200) {
-            this.$store.state.loading = false;
             this.getNotes();
             toast("success", `"${title}" archived successfully!`);
           }
