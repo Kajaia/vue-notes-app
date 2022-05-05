@@ -141,8 +141,8 @@ export default {
           if (res.status === 201) {
             this.$emit("refresh");
             this.closeModal();
-            this.clearInputs();
             toast("success", `"${this.title}" added successfully!`);
+            this.clearInputs();
           }
         })
         .catch(console.error());
