@@ -27,6 +27,7 @@
               id="title"
               class="form-control"
               placeholder="Ex: Lorem ipsum"
+              required
               v-model="title"
             />
           </div>
